@@ -1,0 +1,8 @@
+org/home/technology/configuration/SQSClientConfiguration.java
+ org.home.technology.configuration.SQSClientConfiguration
+org/home/technology/routes/SQSConsumerRoute.java
+ org.home.technology.routes.SQSConsumerRoute
+org/home/technology/routes/SQSProducerRoute.java
+ org.home.technology.routes.SQSProducerRoute
+org/home/technology/SQSCamelApplication.java
+ org.home.technology.SQSCamelApplication
