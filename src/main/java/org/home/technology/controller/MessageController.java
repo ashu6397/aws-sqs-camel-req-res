@@ -2,6 +2,7 @@ package org.home.technology.controller;
 
 import org.apache.camel.*;
 import org.apache.camel.impl.DefaultExchange;
+import org.home.technology.service.SQSManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +20,9 @@ public class MessageController {
     @Autowired
     private CamelContext camelContext;
 
+    @Autowired
+    private SQSManagementService sqsManagement;
+
     @PostMapping(value = "/sendMessage")
     public String sendMessage(@RequestBody String requestBody) throws Exception {
         producerTemplate.sendBody("seda:fromRestEndpoint", requestBody);
@@ -34,5 +38,10 @@ public class MessageController {
         DefaultExchange defaultExchange = new DefaultExchange(camelContext);
         defaultExchange.getIn().setHeader("loadCount", count);
         producerTemplate.send("seda:loadTesting", defaultExchange);
+    }
+
+    @PostMapping(value = "/bulkDeleteQueues/{queuePrefix}")
+    public void bulkDeleteTemporaryQueues(@PathVariable String queuePrefix) {
+        sqsManagement.bulkDeleteQueue(queuePrefix);
     }
 }

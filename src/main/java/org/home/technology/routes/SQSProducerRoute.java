@@ -36,7 +36,6 @@ public class SQSProducerRoute extends RouteBuilder {
                             .amazonSQSRequester()
                             .sendMessageAndGetResponse(request,
                                     20, TimeUnit.SECONDS);
-
                     exchange.getIn().setBody(reply.getBody());
                 })
                 .log("${body}")
