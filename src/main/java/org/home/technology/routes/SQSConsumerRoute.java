@@ -20,7 +20,7 @@ public class SQSConsumerRoute extends RouteBuilder {
 
     @Override
     public void configure() throws Exception {
-        from("aws-sqs://REQUEST-RESPONSE.fifo?amazonSQSClient=#amazonSQSClient&messageAttributeNames=*&concurrentConsumers=10")
+        from("aws-sqs://{{aws-sqs-queue-name}}?amazonSQSClient=#amazonSQSClient&messageAttributeNames=*&concurrentConsumers=10")
                 .log("${body}")
                 .process((exchange) -> {
                     final Message requestMessage = convertToAWSMessage(exchange.getIn().getBody(String.class), exchange.getIn().getHeaders());
